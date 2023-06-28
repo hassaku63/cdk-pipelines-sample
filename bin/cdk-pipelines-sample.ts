@@ -2,6 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
 import { CdkPipelinesSampleStack } from '../lib/cdk-pipelines-sample-stack';
+import { DEFAULT_ACCOUNT_ENV } from 'aws-cdk-lib/cx-api';
 
 const app = new cdk.App();
 new CdkPipelinesSampleStack(app, 'CdkPipelinesSampleStack', {
@@ -18,4 +19,11 @@ new CdkPipelinesSampleStack(app, 'CdkPipelinesSampleStack', {
   // env: { account: '123456789012', region: 'us-east-1' },
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+  env: {
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.CDK_DEFAULT_REGION,
+  },
+  githubRepoOwner: process.env.GITHUB_REPO_OWNER || '',
+  githubRepo: process.env.GITHUB_REPO || '',
+  codestarConnectionArn: process.env.CODESTAR_CONNECTION_ARN || '',
 });
