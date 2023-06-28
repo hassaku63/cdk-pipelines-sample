@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { Runtime } from "aws-cdk-lib/aws-lambda";
+import * as sqs from "aws-cdk-lib/aws-sqs";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 
 export class MyAppStack extends cdk.Stack {
@@ -15,6 +16,8 @@ export class MyAppStack extends cdk.Stack {
     new cdk.CfnOutput(this, "nodejsFunctionArn", {
       value: f.functionArn,
     });
+
+    new sqs.Queue(this, "queue");
   }
 }
 
