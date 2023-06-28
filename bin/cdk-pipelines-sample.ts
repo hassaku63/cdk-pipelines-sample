@@ -9,15 +9,15 @@ const config: StackConfigProps = {
   githubRepo: process.env.GITHUB_REPO_NAME || '',
   codestarConnectionArn: process.env.CODESTAR_CONNECTION_ARN || '',
 }
-if (config.githubRepoOwner === '') {
-  throw new Error('GITHUB_REPO_OWNER is not set');
-}
-if (config.githubRepo === '') {
-  throw new Error('GITHUB_REPO_NAME is not set');
-}
-if (config.codestarConnectionArn === '') {
-  throw new Error('CODESTAR_CONNECTION_ARN is not set');
-}
+// if (config.githubRepoOwner === '') {
+//   throw new Error('GITHUB_REPO_OWNER is not set');
+// }
+// if (config.githubRepo === '') {
+//   throw new Error('GITHUB_REPO_NAME is not set');
+// }
+// if (config.codestarConnectionArn === '') {
+//   throw new Error('CODESTAR_CONNECTION_ARN is not set');
+// }
 
 const app = new cdk.App();
 new CdkPipelinesSampleStack(app, 'CdkPipelinesSampleStack', {

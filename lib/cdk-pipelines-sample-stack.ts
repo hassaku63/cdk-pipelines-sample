@@ -34,7 +34,7 @@ export class CdkPipelinesSampleStack extends cdk.Stack {
         commands: ["npm ci", "npm run build", "npx cdk synth"],
       }),
       dockerEnabledForSynth: true,
-      selfMutation: false,
+      selfMutation: false,      
     });
 
     const development = new MyStage(this, "Dev", {
