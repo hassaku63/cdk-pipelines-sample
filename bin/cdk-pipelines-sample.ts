@@ -1,8 +1,23 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { CdkPipelinesSampleStack } from '../lib/cdk-pipelines-sample-stack';
+import { CdkPipelinesSampleStack, StackConfigProps } from '../lib/cdk-pipelines-sample-stack';
 import { DEFAULT_ACCOUNT_ENV } from 'aws-cdk-lib/cx-api';
+
+const config: StackConfigProps = {
+  githubRepoOwner: process.env.GITHUB_REPO_OWNER || '',
+  githubRepo: process.env.GITHUB_REPO_NAME || '',
+  codestarConnectionArn: process.env.CODESTAR_CONNECTION_ARN || '',
+}
+if (config.githubRepoOwner === '') {
+  throw new Error('GITHUB_REPO_OWNER is not set');
+}
+if (config.githubRepo === '') {
+  throw new Error('GITHUB_REPO_NAME is not set');
+}
+if (config.codestarConnectionArn === '') {
+  throw new Error('CODESTAR_CONNECTION_ARN is not set');
+}
 
 const app = new cdk.App();
 new CdkPipelinesSampleStack(app, 'CdkPipelinesSampleStack', {
@@ -23,7 +38,5 @@ new CdkPipelinesSampleStack(app, 'CdkPipelinesSampleStack', {
     account: process.env.CDK_DEFAULT_ACCOUNT,
     region: process.env.CDK_DEFAULT_REGION,
   },
-  githubRepoOwner: process.env.GITHUB_REPO_OWNER || '',
-  githubRepo: process.env.GITHUB_REPO || '',
-  codestarConnectionArn: process.env.CODESTAR_CONNECTION_ARN || '',
+  ...config,
 });

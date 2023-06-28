@@ -4,11 +4,13 @@ import * as pipelines from "aws-cdk-lib/pipelines";
 import { MyStage } from "./application";
 
 
-interface CdkPipelinesSampleStackProps extends cdk.StackProps {
+export interface StackConfigProps {
   githubRepo: string;
   githubRepoOwner: string;
   codestarConnectionArn: string;
 }
+
+type CdkPipelinesSampleStackProps =  StackConfigProps & cdk.StackProps;
 
 export class CdkPipelinesSampleStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: CdkPipelinesSampleStackProps) {
@@ -30,7 +32,9 @@ export class CdkPipelinesSampleStack extends cdk.Stack {
         ),
         // Install dependencies, build and run cdk synth
         commands: ["npm ci", "npm run build", "npx cdk synth"],
-      })
+      }),
+      dockerEnabledForSynth: true,
+      selfMutation: false,
     });
 
     const development = new MyStage(this, "Dev", {
